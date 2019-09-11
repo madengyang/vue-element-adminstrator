@@ -10,7 +10,6 @@ const service = axios.create({
 //请求前
 service.interceptors.request.use(
   config => {
-    debugger
     // if (store.getters.token) {
     //   config.headers["hr-token"] = store.getters.token;
     // }

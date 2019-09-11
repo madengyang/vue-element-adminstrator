@@ -5,7 +5,7 @@
     class='menu-wrapper'
   >
     <template v-if="hasOneShowingChild(item.children,item)&&(!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
-      <nav-link
+      <Navlink
         v-if="onlyOneChild.meta"
         :to="resolvePath(onlyOneChild.path)"
       >
@@ -14,12 +14,13 @@
           :class="{'submenu-title-noDropdown':!isNest}"
         >
           <Item
-            :icon="onlyOneChild.metq.icon || (item.meta&&item.meta.icon)"
+            :icon="onlyOneChild.meta.icon || (item.meta&&item.meta.icon)"
             :title="onlyOneChild.meta.title"
           />
         </el-menu-item>
-      </nav-link>
+      </Navlink>
     </template>
+
     <el-submenu
       v-else
       ref="subMenu"
@@ -108,7 +109,7 @@ export default {
       if (isExternal(this.basePath)) {
         return this.basePath
       }
-      return path.resolve(this.basePath, routePath)
+      return path.resolve(this.basePath, ChildPath)
     }
   },
 }

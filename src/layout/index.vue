@@ -1,28 +1,34 @@
 <!-- 组件说明 -->
 <template>
-  <div class='app-wrapper'>
-    <!-- <div
-    class='app-wrapper'
+  <div
     :class="classObj"
-  > -->
-    <!-- <Sidebar /> -->
-    <!-- <div class="main-container">
+    class='app-wrapper'
+  >
+    <Sidebar class="sidebar-container" />
+    <div
+      :class="{tasTagsView:needTagsView}"
+      class="main-container"
+    >
       <div class="fixed-header">
         <Navbar />
-        <TagsView />
+        <TagsView v-if="needTagsView" />
       </div>
-
       <AppMain />
-    </div> -->
-    <AppMain />
+    </div>
+
   </div>
 </template>
 
 <script>
 import { AppMain, Navbar, Sidebar, TagsView } from './components'
 import { mapState } from 'vuex'
-import state from '@/store'
 export default {
+  name: 'Layout',
+  data() {
+    return {
+      needTagsView: true
+    }
+  },
   components: {
     Sidebar,        //左导   
     Navbar,         //顶导
@@ -30,17 +36,22 @@ export default {
     AppMain         //主内容
   },
   computed: {
-    // ...mapState({
-    //   sidebar: state => state.app.sidebar,
-    // })
+    ...mapState({
+      sidebar: state => state.app.sidebar,
+    })
+  },
+  created() {
+    console.log(this.sidebar.opened)
+    console.log(this.classObj())
+    debugger
   },
   methods: {
     classObj() {
-      console.log(this.$store)
-      debugger
+
       return {
-        // hideSidebar: !this.sidebar.opened,
-        // openSidebar: this.sidebar.opened,
+        hideSidebar: !this.sidebar.opened,
+        openSidebar: this.sidebar.opened,
+        withoutAnimation: this.sidebar.withoutAnimation,
       }
     }
   },
@@ -52,6 +63,10 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
+  &.openSidebar {
+    position: fixed;
+    top: 0;
+  }
 }
 .fixed-header {
   position: fixed;

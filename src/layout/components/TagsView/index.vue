@@ -1,4 +1,4 @@
-<!-- 面包屑 -->
+<!-- tags切换 -->
 <template>
   <div
     id="tags-view-container"
@@ -13,9 +13,18 @@
         ref="tag"
         :key="tag.path"
         :class="isActive(tag)?'active':''"
-        :to="{path:tag.path,query:tag.query, fullPath:tag.fullPath }"
+        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
+        tag="span"
+        class="tags-view-item"
+        @click.middle.native="closeSelectedTag(tag)"
+        @contextmenu.prevent.native="openMenu(tag,$event)"
       >
-        {{tag.title}}
+        {{ tag.title }}
+        <span
+          v-if="!tag.meta.affix"
+          class="el-icon-close"
+          @click.prevent.stop="closeSelectedTag(tag)"
+        />
       </router-link>
     </scroll-pane>
     <ul
@@ -35,7 +44,8 @@
 </template>
 
 <script>
-import Path from 'path'
+import path from 'path'
+import { mapGetters } from 'vuex'
 import ScrollPane from './ScrollPane'
 
 export default {
@@ -47,16 +57,17 @@ export default {
       visible: false,
       top: 0,
       left: 0,
-      seletedTag: {},
+      selectedTag: {},
       affixTags: []
     };
   },
   computed: {
-    visitedViews() {
-      return this.$store.state.tagsView.visitedViews
-    },
+    ...mapGetters([
+      'visitedViews'
+    ]),
     routes() {
-      return this.$tore.state.permission.routes
+      console.log(this.$store)
+      return this.$store.state.permission.routes
     }
   },
   watch: {
@@ -76,7 +87,6 @@ export default {
     filterAffixTags(routes, basePath = '/') {
       let tags = []
       routes.forEach(route => {
-        debugger
         if (route.meta && route.meta.affix) {
           const tagPath = path.resolve(basePath, route.path)
           tags.push({
@@ -148,7 +158,6 @@ export default {
       })
     },
     closeAllTags(view) {
-      debugger
       this.$store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
         if (this.affixTags.some(tag => tag.path === view.path)) {
           return
