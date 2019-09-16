@@ -10,7 +10,7 @@
 </template>
 
 <script>
-const tagAndTagSpacing = 4 // tagAndTagSpacing
+const tagAndTagSpacing = 4 // 标签间距
 
 export default {
   name: 'ScrollPane',
@@ -39,7 +39,7 @@ export default {
       let firstTag = null
       let lastTag = null
 
-      // find first tag and last tag
+      // 第一个tag 和 最后一个tag
       if (tagList.length > 0) {
         firstTag = tagList[0]
         lastTag = tagList[tagList.length - 1]
@@ -50,15 +50,15 @@ export default {
       } else if (lastTag === currentTag) {
         $scrollWrapper.scrollLeft = $scrollWrapper.scrollWidth - $containerWidth
       } else {
-        // find preTag and nextTag
+        // 上一个tag   下一个tag
         const currentIndex = tagList.findIndex(item => item === currentTag)
         const prevTag = tagList[currentIndex - 1]
         const nextTag = tagList[currentIndex + 1]
 
-        // the tag's offsetLeft after of nextTag
+        // tag's 之后的下一个标签
         const afterNextTagOffsetLeft = nextTag.$el.offsetLeft + nextTag.$el.offsetWidth + tagAndTagSpacing
 
-        // the tag's offsetLeft before of prevTag
+        // tag's 之前的上一个标签
         const beforePrevTagOffsetLeft = prevTag.$el.offsetLeft - tagAndTagSpacing
 
         if (afterNextTagOffsetLeft > $scrollWrapper.scrollLeft + $containerWidth) {

@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home.vue'
 import Layout from '@/layout'
 
-//
+import Home from '@/views/home'
+
 //  meta.affix; // true为 面包屑中自动带的默认页并且不能删除
 Vue.use(Router)
 
@@ -29,9 +29,9 @@ export const constantRoutes = [
     children: [
       {
         path: '/',
-        name: 'edit',
+        name: 'Login',
         meta: { icon: 'edit', title: '首页22' },
-        component: Home
+        component: () => import('@/views/login/index')
       },
       {
         path: '/edit',
@@ -63,9 +63,9 @@ export const asyncRoutes = [
     children: [
       {
         path: '/',
-        name: 'edit',
+        name: 'Login',
         meta: { icon: 'edit', title: '首页22' },
-        component: Home
+        component: () => import('@/views/login/index')
       },
       {
         path: '/edit',
@@ -80,7 +80,7 @@ export const asyncRoutes = [
 
 const createRouter = () =>
   new Router({
-    mode: 'history',
+    // mode: 'history',
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRoutes
   })

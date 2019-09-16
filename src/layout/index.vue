@@ -9,7 +9,7 @@
       :class="{tasTagsView:needTagsView}"
       class="main-container"
     >
-      <div class="fixed-header">
+      <div>
         <Navbar />
         <TagsView v-if="needTagsView" />
       </div>
@@ -38,23 +38,15 @@ export default {
   computed: {
     ...mapState({
       sidebar: state => state.app.sidebar,
-    })
-  },
-  created() {
-    console.log(this.sidebar.opened)
-    console.log(this.classObj())
-    debugger
-  },
-  methods: {
+    }),
     classObj() {
-
       return {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
       }
     }
-  },
+  }
 }
 </script>
 
@@ -63,21 +55,5 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
-  &.openSidebar {
-    position: fixed;
-    top: 0;
-  }
-}
-.fixed-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 9;
-  width: calc(100% - 210px);
-  transition: width 0.28s;
-}
-
-.hideSidebar .fixed-header {
-  width: calc(100% - 54px);
 }
 </style>
