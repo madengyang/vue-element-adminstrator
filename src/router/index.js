@@ -9,13 +9,19 @@ Vue.use(Router)
 
 export const constantRoutes = [
   {
+    path: '/login',
+    meta: { title: '登录' },
+    name: 'Login',
+    hidden: true,
+    component: () => import('@/views/login/index')
+  },
+  {
     path: '/',
     meta: { icon: 'edit', title: '首页' },
-    redirect: '/home',
     component: Layout,
     children: [
       {
-        path: '/home',
+        path: '/',
         name: 'home',
         meta: { icon: 'edit', title: '首页1' },
         component: Home
@@ -31,7 +37,7 @@ export const constantRoutes = [
         path: '/',
         name: 'Login',
         meta: { icon: 'edit', title: '首页22' },
-        component: () => import('@/views/login/index')
+        component: () => import('@/views/home/index')
       },
       {
         path: '/edit',
@@ -65,7 +71,7 @@ export const asyncRoutes = [
         path: '/',
         name: 'Login',
         meta: { icon: 'edit', title: '首页22' },
-        component: () => import('@/views/login/index')
+        component: () => import('@/views/home/index')
       },
       {
         path: '/edit',

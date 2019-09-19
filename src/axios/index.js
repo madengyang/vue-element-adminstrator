@@ -4,16 +4,17 @@ import { Message } from 'element-ui'
 
 //axios 初始化
 const service = axios.create({
-  apiUrl: process.env.VUE_APP_BASE_API,
-  timeout: 5000 //超时时效
+  baseURL: process.env.VUE_APP_BASE_API,
+  timeout: 50000 //超时时效
 })
 
 //请求前
 service.interceptors.request.use(
   config => {
-    // if (store.getters.token) {
-    //   config.headers["hr-token"] = store.getters.token;
-    // }
+    debugger
+    if (store.getters.token) {
+      config.headers['token'] = store.getters.token
+    }
     return config
   },
   error => {
@@ -26,7 +27,7 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     //非200拦截
-    if (res.code !== 200) {
+    if (res.status !== 200) {
       MessageChannel({
         message: res.message || 'Error',
         type: 'error',

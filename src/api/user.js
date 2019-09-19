@@ -2,17 +2,17 @@ import request from '@/axios'
 
 export function login(data) {
   return request({
-    url: '',
+    url: 'user/login',
     method: 'post',
     data
   })
 }
 
-export function userInfo(token) {
+export function getInfo(token) {
   return request({
-    url: '',
+    url: '/user/userInfo',
     method: 'get',
-    parmas: { token }
+    parmas: token
   })
 }
 

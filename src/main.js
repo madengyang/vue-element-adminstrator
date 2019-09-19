@@ -8,7 +8,7 @@ import './styles/element-variables.scss'
 import '@/styles/index.scss'
 
 import './icons' // icon
-import './routerPermission'
+import './router/permission'
 
 Vue.use(Element)
 Vue.config.productionTip = false
