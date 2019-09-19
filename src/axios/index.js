@@ -11,7 +11,6 @@ const service = axios.create({
 //请求前
 service.interceptors.request.use(
   config => {
-    debugger
     if (store.getters.token) {
       config.headers['token'] = store.getters.token
     }
