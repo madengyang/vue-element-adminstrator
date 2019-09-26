@@ -1,24 +1,25 @@
 import request from '@/axios'
 
-export function login(data) {
+export function login(params) {
+  debugger
   return request({
     url: 'user/login',
     method: 'post',
-    data
+    data: params
   })
 }
 
-export function getInfo(token) {
+export function getInfo(params) {
   return request({
     url: '/user/userInfo',
     method: 'post',
-    token
+    data: params
   })
 }
 
-export function loginOut() {
-  return request({
-    url: '',
-    method: 'post'
-  })
-}
+// export function loginOut() {
+//   return request({
+//     url: '',
+//     method: 'post'
+//   })
+// }

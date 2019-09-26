@@ -9,7 +9,6 @@ import { getToken } from '@/utils/auth' // get token from cookie
 NProgress.configure({ showSpinner: false }) // 初始化进度条
 
 const whiteList = ['/login', '/auth-redirect'] // 白名单
-
 router.beforeEach(async (to, from, next) => {
   // 进度条start
   NProgress.start()
@@ -17,7 +16,6 @@ router.beforeEach(async (to, from, next) => {
   // document.title = getPageTitle(to.meta.title)
   // determine whether the user has logged in
   const hasToken = getToken()
-  debugger
   if (hasToken) {
     if (to.path === '/login') {
       // 有token  进入登录页 跳转到首页
@@ -26,17 +24,22 @@ router.beforeEach(async (to, from, next) => {
     } else {
       // 查看权限
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      console.log(store.getters.roles, store.getters.roles.length)
+      console.log(hasRoles)
       if (hasRoles) {
         next()
       } else {
         try {
           //从新获取角色
-          const { roles } = await store.dispatch('user/GetInfo')
+          const roles =
+            (await store.dispatch('GetInfo')).result.data.roles || 'visitor'
           // 通过角色获取权限
           const accessRoutes = await store.dispatch(
             'permission/generateRoutes',
             roles
           )
+          console.log(roles)
+          console.log(accessRoutes)
           // 添加路由
           router.addRoutes(accessRoutes)
           //重新跳转页面 判断是否将权限路由加载成功
@@ -51,11 +54,14 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   } else {
+    debugger
+    console.log(to.path)
+    console.log(whiteList.indexOf(to.path))
     if (whiteList.indexOf(to.path) !== -1) {
       //白名单
       next()
     } else {
-      debugger
+      //debugger
       // 其它到登录页
       next(`/login?redirect=${to.path}`)
       NProgress.done()

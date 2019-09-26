@@ -4,7 +4,7 @@
       alt="Vue logo"
       src="@/assets/logo.png"
     >
-    首页首页a
+    广告1
   </div>
 </template>
 

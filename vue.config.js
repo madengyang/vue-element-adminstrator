@@ -32,10 +32,10 @@ module.exports = {
     proxy: {
       //代理
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://localhost:3002/api`,
+        target: `http://10.5.4.56:3002/`,
         changeOrigin: true, //代理开关
         pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API]: ''
+          ['^' + process.env.VUE_APP_BASE_API]: '/api'
         }
       }
     }
@@ -72,10 +72,10 @@ module.exports = {
     //开发环境
     let pluginsDev = [
       //移动端模拟开发者工具(https://github.com/diamont1001/vconsole-webpack-plugin  https://github.com/Tencent/vConsole)
-      new vConsolePlugin({
-        filter: [], // 需要过滤的入口文件
-        enable: process.env.NODE_ENV != 'production' // 发布代码前记得改回 false
-      })
+      // new vConsolePlugin({
+      //   filter: [], // 需要过滤的入口文件
+      //   enable: process.env.NODE_ENV != 'production' // 发布代码前记得改回 false
+      // })
     ]
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...process.env.NODE_ENV !== 'development'
