@@ -1,7 +1,6 @@
 import request from '@/axios'
 
 export function login(params) {
-  debugger
   return request({
     url: 'user/login',
     method: 'post',
@@ -17,6 +16,12 @@ export function getInfo(params) {
   })
 }
 
+export function loginOut() {
+  return request({
+    url: '/user/loginOut',
+    method: 'get'
+  })
+}
 // export function loginOut() {
 //   return request({
 //     url: '',

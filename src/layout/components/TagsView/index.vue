@@ -172,12 +172,12 @@ export default {
       } else {
         this.$router.push('/')
         //   //设定首页时使用
-        // if (view.name === 'Dashboard') {
-        //   // to reload home page
-        //   this.$router.replace({ path: '/redirect' + view.fullPath })
-        // } else {
-        //   this.$router.push('/')
-        // }
+        if (view.name === 'home') {
+          // to reload home page
+          this.$router.replace({ path: '/redirect' + view.fullPath })
+        } else {
+          this.$router.push('/')
+        }
       }
     },
     openMenu(tag, e) {

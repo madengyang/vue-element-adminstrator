@@ -25,15 +25,15 @@
       >
         <div class="avatar-wrapper">
           <img
-            :src="'?imageView2/1/w/80/h/80'"
             class="user-avatar"
+            src="@/assets/login/avatar.png"
+            v-real-img="avatar"
           >
-          <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu>
           <router-link to="/">
             <el-dropdown-item>
-              个人中心
+              {{userInfo.UserName}}
             </el-dropdown-item>
           </router-link>
           <el-dropdown-item divided>
@@ -59,7 +59,8 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      // 'avatar',
+      'userInfo',
+      'avatar',
     ])
   },
   methods: {
@@ -67,7 +68,7 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
+      await this.$store.dispatch('LoginOut')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   },
@@ -128,28 +129,22 @@ export default {
     }
 
     .avatar-container {
-      margin-right: 30px;
-
       .avatar-wrapper {
-        margin-top: 5px;
+        padding-top: 5px;
         position: relative;
+        height: 50px;
 
         .user-avatar {
           cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
-        }
-
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
+          border-radius: 100%;
         }
       }
     }
   }
+}
+.el-dropdown-menu {
+  margin-top: 5px !important;
 }
 </style>

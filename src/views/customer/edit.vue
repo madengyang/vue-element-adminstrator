@@ -1,11 +1,11 @@
 <template>
-  <div class="home">
-    管理员
+  <div>
+    客源编辑
   </div>
 </template>
 
 <script>
 export default {
-  name: 'home'
+  name: 'CUSTOMER_EDIT'
 }
 </script>

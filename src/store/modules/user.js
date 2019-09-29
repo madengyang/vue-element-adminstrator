@@ -1,39 +1,34 @@
-import { login, getInfo } from '@/api/user'
-import { getToken, setToken } from '@/utils/auth'
-// import router, { resetRouter } from '@/router'
-
+import { login, getInfo, loginOut } from '@/api/user'
+import { getToken, setToken, removeToken } from '@/utils/auth'
+import { resetRouter } from '@/router'
 const user = {
   state: {
     token: getToken(),
-    city: sessionStorage.getItem('city') || '',
-    // cityList: JSON.parse(sessionStorage.getItem('cityList')) || [],
+    avatar: '',
     roles: [],
-    userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {}
+    userInfo: []
   },
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token
       setToken(token)
     },
-    SET_CITY: (state, city) => {
-      state.city = city
+    SET_AVATAR: (state, avatar) => {
+      state.avatar = avatar
     },
     SET_ROLES: (state, roles) => {
       state.roles.push(roles)
     },
     SET_USERINFO: (state, info) => {
       state.userInfo = info
-    },
-    SET_CITYLIST: (state, citylist) => {
-      state.cityList = citylist
     }
   },
 
   actions: {
     // 登录
-    Login({ commit }, userInfo) {
+    Login({ commit }, loginFrom) {
       return new Promise((resolve, reject) => {
-        login(userInfo)
+        login(loginFrom)
           .then(response => {
             let { data } = response.result
             commit('SET_TOKEN', data.token)
@@ -46,19 +41,33 @@ const user = {
     },
     // 获取用户信息
     GetInfo({ commit }, params) {
-      return new Promise(resolve => {
-        debugger
+      return new Promise((resolve, reject) => {
         getInfo(params)
           .then(response => {
             var data = response.result.data
-            console.log(data)
-            commit('SET_CITY', data.City)
-            commit('SET_ROLES', data.UserName)
+            commit('SET_ROLES', data.roles)
+            commit('SET_AVATAR', data.avatar)
             commit('SET_USERINFO', data)
             resolve(response)
           })
           .catch(error => {
-            console.log(error)
+            reject(error)
+          })
+      })
+    },
+    LoginOut({ commit }, params) {
+      return new Promise((resolve, reject) => {
+        loginOut(params)
+          .then(() => {
+            commit('SET_ROLES', [])
+            commit('SET_AVATAR', '')
+            commit('SET_USERINFO', '')
+            removeToken()
+            resetRouter()
+            resolve()
+          })
+          .catch(error => {
+            reject(error)
           })
       })
     }

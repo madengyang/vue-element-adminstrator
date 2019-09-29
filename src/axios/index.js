@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
-import { Message } from 'element-ui'
+import { Message, MessageBox } from 'element-ui'
 
 //axios 初始化
 const service = axios.create({
@@ -27,19 +27,35 @@ service.interceptors.response.use(
     const res = response.data
     //非200拦截
     if (res.status !== 200) {
-      MessageChannel({
-        message: res.message || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      })
-      return Promise.reject(res.message || 'Error')
+      if (res.status === 50000) {
+        //50000代表token过期
+        MessageBox.confirm('登录已失效，请重新登录', '登录失效', {
+          confirmButtonText: '重新登录页面',
+          cancelButtonText: '关闭当前页面'
+        })
+          .then(() => {
+            store.dispatch('LoginOut').then(() => {
+              location.reload()
+            })
+          })
+          .catch(() => {
+            window.close()
+          })
+      } else {
+        Message({
+          message: res.msg || 'Error',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+      return Promise.reject(res.msg || 'Error')
     } else {
       return res
     }
   },
   error => {
     Message({
-      message: error.message,
+      message: error || 'Error',
       type: 'error',
       duration: 5 * 1000
     })

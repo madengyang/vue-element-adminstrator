@@ -1,29 +1,13 @@
-# vue-element-adminstrator
+# 安装依赖
 
-## Project setup
-```
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+# 启动项目
 
-### Compiles and minifies for production
-```
-npm run build
-```
+npm run dev
 
-### Run your tests
-```
-npm run test
-```
+# 端口 8080
 
-### Lints and fixes files
-```
-npm run lint
-```
+# 视图 views 中以 - 分割 保持和路由分割同样规则 error-page
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# 权限控制 权限从 /src/store/user/GetInfo 中动态传入权限控制 如果接口没有传 就是游客权限
