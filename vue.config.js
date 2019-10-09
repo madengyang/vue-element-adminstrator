@@ -32,8 +32,8 @@ module.exports = {
     proxy: {
       //代理
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://localhost:3002`,
-        // target: `http://10.5.4.56:3002/`,
+        //target: `http://localhost:3002`,
+        target: `http://10.5.4.56:3002/`,
         changeOrigin: true, //代理开关
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: '/api'

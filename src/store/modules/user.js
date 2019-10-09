@@ -44,6 +44,7 @@ const user = {
       return new Promise((resolve, reject) => {
         getInfo(params)
           .then(response => {
+            debugger
             var data = response.result.data
             commit('SET_ROLES', data.roles)
             commit('SET_AVATAR', data.avatar)

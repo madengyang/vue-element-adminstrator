@@ -28,6 +28,7 @@ router.beforeEach(async (to, from, next) => {
       } else {
         try {
           //从新获取角色
+          debugger
           const roles =
             (await store.dispatch('GetInfo')).result.data.roles || 'visitor'
           // 通过角色获取权限
