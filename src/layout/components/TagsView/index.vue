@@ -74,6 +74,13 @@ export default {
     $route() {
       this.addTags()
       this.moveToCurrentTag()
+    },
+    visible(value) {
+      if (value) {
+        document.body.addEventListener('click', this.closeMenu)
+      } else {
+        document.body.removeEventListener('click', this.closeMenu)
+      }
     }
   },
   mounted() {
