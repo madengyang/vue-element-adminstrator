@@ -3,7 +3,6 @@ const path = require('path')
 const vConsolePlugin = require('vconsole-webpack-plugin') // 引入 移动端模拟开发者工具 插件 （另：https://github.com/liriliri/eruda）
 const CompressionPlugin = require('compression-webpack-plugin') //Gzip
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin //Webpack包文件分析器
 const resolve = dir => path.join(__dirname, dir)
@@ -55,8 +54,8 @@ module.exports = {
       new UglifyJsPlugin({
         //去除console.log
         uglifyOptions: {
+          warnings: false,
           compress: {
-            warnings: false,
             drop_debugger: true, //提取debugger
             drop_console: true //提取console
           }
@@ -66,19 +65,18 @@ module.exports = {
         parallel: 4,
         cache: true //启用文件缓存
       }),
-      new ExtractTextPlugin('static/css/styles.[contenthash].css'),
-      //	Webpack包文件分析器(https://github.com/webpack-contrib/webpack-bundle-analyzer)
+      // //	Webpack包文件分析器(https://github.com/webpack-contrib/webpack-bundle-analyzer)
       new BundleAnalyzerPlugin()
     ]
     //开发环境
     let pluginsDev = [
       //移动端模拟开发者工具(https://github.com/diamont1001/vconsole-webpack-plugin  https://github.com/Tencent/vConsole)
-      // new vConsolePlugin({
-      //   filter: [], // 需要过滤的入口文件
-      //   enable: process.env.NODE_ENV != 'production' // 发布代码前记得改回 false
-      // })
+      new vConsolePlugin({
+        filter: [], // 需要过滤的入口文件
+        enable: process.env.NODE_ENV == 'development' // 发布代码前记得改回 false
+      })
     ]
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV !== 'development') {
       // 为生产环境修改配置...process.env.NODE_ENV !== 'development'
       config.plugins = [...config.plugins, ...pluginsPro]
     } else {
@@ -126,7 +124,7 @@ module.exports = {
     config
       // https://webpack.js.org/configuration/devtool/#development
       .when(process.env.NODE_ENV === 'development', config =>
-        config.devtool('cheap-module-eval-source-map')
+        config.devtool('cheap-source-map')
       )
 
     config.when(process.env.NODE_ENV !== 'development', config => {

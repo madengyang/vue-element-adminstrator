@@ -3,7 +3,7 @@ import store from '@/store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { getToken } from '@/utils/auth' // get token from cookie
+import { sessionData } from '@/utils/validate' // get token from cookie
 // import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // 初始化进度条
@@ -14,7 +14,7 @@ router.beforeEach(async (to, from, next) => {
   NProgress.start()
   // 页面title
   document.title = to.meta.title
-  const hasToken = getToken()
+  const hasToken = store.getters.token || sessionData('get', 'token')
   if (hasToken) {
     if (to.path === '/login') {
       // 有token  进入登录页 跳转到首页

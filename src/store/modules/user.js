@@ -1,9 +1,9 @@
 import { login, getInfo, loginOut } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { sessionData } from '@/utils/validate'
 import { resetRouter } from '@/router'
 const user = {
   state: {
-    token: getToken(),
+    token: sessionData('get', 'token'),
     avatar: '',
     roles: [],
     userInfo: []
@@ -11,7 +11,7 @@ const user = {
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token
-      setToken(token)
+      sessionData('set', 'token', token)
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
@@ -44,7 +44,6 @@ const user = {
       return new Promise((resolve, reject) => {
         getInfo(params)
           .then(response => {
-            debugger
             var data = response.result.data
             commit('SET_ROLES', data.roles)
             commit('SET_AVATAR', data.avatar)
@@ -63,7 +62,7 @@ const user = {
             commit('SET_ROLES', [])
             commit('SET_AVATAR', '')
             commit('SET_USERINFO', '')
-            removeToken()
+            sessionData('clear')
             resetRouter()
             resolve()
           })
