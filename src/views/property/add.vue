@@ -1,6 +1,7 @@
 <template>
   <div>
     房源新增
+    <input />
   </div>
 </template>
   

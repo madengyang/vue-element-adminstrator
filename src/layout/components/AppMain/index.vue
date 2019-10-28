@@ -2,7 +2,7 @@
 <template>
   <div class='app-main'>
     <transition name="fade-transform">
-      <keep-alive>
+      <keep-alive :include="cachedViews">
         <router-view :key="key"></router-view>
       </keep-alive>
     </transition>

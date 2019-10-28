@@ -22,6 +22,7 @@ router.beforeEach(async (to, from, next) => {
       NProgress.done()
     } else {
       // 查看权限
+      debugger
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
       if (hasRoles) {
         next()
