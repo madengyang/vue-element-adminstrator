@@ -13,7 +13,7 @@ import './router/permission'
 Vue.use(Element)
 Vue.config.productionTip = false
 Vue.directive('real-img', async function(el, binding) {
-  //指令名称为：real-img
+  //指令名称为：real-img   //检测图片是否存在
   let imgURL = binding.value //获取图片地址
   if (imgURL) {
     let exist = await imageIsExist(imgURL)

@@ -31,6 +31,13 @@ params: params
 })
 }
 
+# 图标（icons）
+
+<svg-icon
+class-name="add"
+icon-class="add"
+/>
+
 # 路由（router)
 
 视图 views 中以 - 分割 保持和路由分割同样规则 error-page ##### path:error-page
