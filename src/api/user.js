@@ -25,6 +25,3 @@ export function loginOut() {
 // export function loginOut() {
 //   return request({
 //     url: '',
-//     method: 'post'
-//   })
-// }
