@@ -109,6 +109,7 @@ export default {
       if (isExternal(this.basePath)) {
         return this.basePath
       }
+      console.log(path.resolve(this.basePath, ChildPath))
       return path.resolve(this.basePath, ChildPath)
     }
   },

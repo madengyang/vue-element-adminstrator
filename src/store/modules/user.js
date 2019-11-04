@@ -5,7 +5,7 @@ const user = {
   state: {
     token: sessionData('get', 'token'),
     avatar: '',
-    roles: [],
+    roles: '',
     userInfo: []
   },
   mutations: {
@@ -17,7 +17,7 @@ const user = {
       state.avatar = avatar
     },
     SET_ROLES: (state, roles) => {
-      state.roles.push(roles)
+      state.roles = roles
     },
     SET_USERINFO: (state, info) => {
       state.userInfo = info
@@ -45,8 +45,8 @@ const user = {
         getInfo(params)
           .then(response => {
             var data = response.result.data
-            commit('SET_ROLES', data.roles)
-            commit('SET_AVATAR', data.avatar)
+            commit('SET_ROLES', data.Roles)
+            commit('SET_AVATAR', data.Avatar)
             commit('SET_USERINFO', data)
             resolve(response)
           })
@@ -59,10 +59,11 @@ const user = {
       return new Promise((resolve, reject) => {
         loginOut(params)
           .then(() => {
-            commit('SET_ROLES', [])
+            commit('SET_TOKEN', '')
+            commit('SET_ROLES', '')
             commit('SET_AVATAR', '')
             commit('SET_USERINFO', '')
-            sessionData('clear')
+            sessionData('clean')
             resetRouter()
             resolve()
           })

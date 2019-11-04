@@ -62,7 +62,7 @@ export const constantRoutes = [
   {
     path: '/property',
     meta: { icon: 'edit', title: '房源管理' },
-    redirect: 'noRedirect',
+    redirect: '/property/add',
     component: Layout,
     children: [
       {
@@ -114,6 +114,7 @@ export const asyncRoutes = [
 
 const createRouter = () =>
   new Router({
+    base: 'ss',
     // mode: 'history',
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRoutes

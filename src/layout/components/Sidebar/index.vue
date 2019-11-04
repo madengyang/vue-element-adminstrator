@@ -37,6 +37,7 @@ export default {
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
+      console.log(this.permission_routes)
       //选中路由
       if (meta.activeMenu) {
         return meta.activeMenu

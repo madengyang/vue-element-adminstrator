@@ -10,10 +10,9 @@ NProgress.configure({ showSpinner: false }) // 初始化进度条
 
 const whiteList = ['/login'] // 白名单
 router.beforeEach(async (to, from, next) => {
-  // 进度条start
-  NProgress.start()
-  // 页面title
-  document.title = to.meta.title
+  NProgress.start() // 进度条start
+
+  document.title = to.meta.title // 页面title
   const hasToken = store.getters.token || sessionData('get', 'token')
   if (hasToken) {
     if (to.path === '/login') {
@@ -22,16 +21,14 @@ router.beforeEach(async (to, from, next) => {
       NProgress.done()
     } else {
       // 查看权限
-      debugger
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
       if (hasRoles) {
         next()
       } else {
         try {
           //从新获取角色
-          debugger
           const roles =
-            (await store.dispatch('GetInfo')).result.data.roles || 'visitor'
+            (await store.dispatch('GetInfo')).result.data.Roles || 'visitor'
           // 通过角色获取权限
           const accessRoutes = await store.dispatch(
             'permission/generateRoutes',
@@ -44,7 +41,6 @@ router.beforeEach(async (to, from, next) => {
         } catch (error) {
           // 注销 跳转到登录页
           await store.dispatch('LoginOut')
-          debugger
           Message.error(error || 'Permission Error')
           next(`/login?redirect=${to.path}`)
           NProgress.done()
